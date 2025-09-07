@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\Users\\JUNIOR\\Documents\\Proyectos\\reto\\solicitud\\infrastructure\\entry-points\\reactive-web\\src\\main\\java\\pe\\crediya\\solicitud\\api/**)",
+      "Read(/C:\\Users\\JUNIOR\\Documents\\Proyectos\\reto\\solicitud\\infrastructure\\entry-points\\reactive-web\\src\\main\\java\\pe\\crediya\\solicitud\\api/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

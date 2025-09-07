@@ -1,0 +1,69 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: "Solicitud"
+  devtools:
+    add-properties: false
+  profiles:
+    include: null
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    circuitbreakers:
+      enabled: true
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
+adapters:
+  r2dbc:
+    database: "crediya_autenticacion"
+    host: "localhost"
+    port: 5432
+    username: "postgres"
+    password: "root"
+    schema: "public"
+    pool:
+      initial-size: 12
+      max-size: 15
+      max-idle-time: 10
+springdoc:
+  api-docs:
+    enabled: true
+    path: "/v3/api-docs"
+  swagger-ui:
+    enabled: true
+    path: "/swagger-ui.html"
+    tags-sorter: "alpha"
+    operations-sorter: "method"
+adapter:
+  restconsumer:
+    timeout: 5000
+    url: "http://localhost:8080"
+resilience4j:
+  circuitbreaker:
+    instances:
+      testGet:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slowCallRateThreshold: 50
+        slowCallDurationThreshold: "2s"
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: "10s"
+      testPost:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        slowCallRateThreshold: 50
+        slowCallDurationThreshold: "2s"
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10
+        waitDurationInOpenState: "10s"
