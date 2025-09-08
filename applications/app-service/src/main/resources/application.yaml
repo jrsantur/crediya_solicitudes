@@ -45,7 +45,10 @@ springdoc:
 adapter:
   restconsumer:
     timeout: 5000
-    url: "http://localhost:8080"
+    clients:
+      auth:
+        valida-token: "http://localhost:8080/api/v1/usuarios/valida_token"
+        obtener-usuario: "http://localhost:8080/api/v1/usuarios"
 resilience4j:
   circuitbreaker:
     instances:

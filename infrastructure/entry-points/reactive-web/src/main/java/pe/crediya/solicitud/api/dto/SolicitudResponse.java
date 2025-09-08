@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pe.crediya.solicitud.model.usuario.Usuario;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +17,13 @@ import java.time.LocalDateTime;
 @Schema(description = "Datos de una solicitud de préstamo")
 public class SolicitudResponse {
 
-    @Schema(description = "Identificador único de la solicitud", example = "550e8400-e29b-41d4-a716-446655440000")
-    @JsonProperty("id")
-    private String id;
+    @Schema(description = "Cliente que solicita el prestamo")
+    @JsonProperty("cliente")
+    private UsuarioDto usuarioDto;
+
+    @Schema(description = "Solicitud del cliente ")
+    @JsonProperty("solicitud")
+    private SolicitudDto solicitudDto;
 
     @Schema(description = "Estado actual de la solicitud", example = "PENDIENTE_REVISION")
     @JsonProperty("estado")
@@ -31,5 +36,7 @@ public class SolicitudResponse {
     @Schema(description = "Fecha de última actualización")
     @JsonProperty("fechaActualizacion")
     private LocalDateTime fechaActualizacion;
+
+
 
 }

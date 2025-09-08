@@ -12,6 +12,8 @@ import pe.crediya.solicitud.api.dto.SolicitudRevisionRequestDto;
 import pe.crediya.solicitud.api.mapper.SolicitudMapper;
 import pe.crediya.solicitud.model.solicitud.EstadoSolicitud;
 import pe.crediya.solicitud.model.solicitud.Solicitud;
+import pe.crediya.solicitud.model.usuario.Usuario;
+import pe.crediya.solicitud.usecase.auth.AuthUseCase;
 import pe.crediya.solicitud.usecase.solicitud.SolicitudUseCase;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,6 +24,7 @@ import reactor.core.publisher.Mono;
 public class Handler {
 
     private final SolicitudUseCase solicitudUseCase;
+    private final AuthUseCase authUseCase;
     private final SolicitudMapper solicitudMapper;
 
     public Mono<ServerResponse> crearSolicitud(ServerRequest serverRequest) {
@@ -48,7 +51,11 @@ public class Handler {
         int tamano = serverRequest.queryParam("tamano").map(Integer::parseInt).orElse(10);
 
         return solicitudUseCase.obtenerSolicitudesPendientesRevision( pagina, tamano) // Flux<SolicitudDto>
-                .collectList() // Mono<List<SolicitudDto>>
+                .flatMap( solicitudes ->  {
+                    authUseCase.obtenerUsuario(solicitudes.getDocumentoIdentidad())
+                            .defaultIfEmpty(Usuario.builder().documento(solicitudes.getDocumentoIdentidad()).build())
+                            .map(u ->
+                })
                 .flatMap(list -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(list));

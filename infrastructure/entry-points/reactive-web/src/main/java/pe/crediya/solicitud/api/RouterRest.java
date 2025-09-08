@@ -83,8 +83,8 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route()
                 .path("/api/v1/solicitudes", builder -> builder
-                        .POST("", authFilter.requireRole("CLIENTE", solicitudHandler::crearSolicitud))
-                        .GET( "", authFilter.requireRole("CLIENTE", solicitudHandler::obtenerSolicitudPorRevision)))
+                        .POST("", authFilter.requireAuth("CLIENTE", solicitudHandler::crearSolicitud))
+                        .GET( "", authFilter.requireAuth("ASESOR", solicitudHandler::obtenerSolicitudPorRevision)))
                 .build();
 
     }

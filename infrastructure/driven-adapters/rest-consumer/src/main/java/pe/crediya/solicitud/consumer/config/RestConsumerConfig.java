@@ -17,23 +17,32 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @Configuration
 public class RestConsumerConfig {
 
-    private final String url;
+    @Value("${adapter.restconsumer.clients.auth.valida-token}")
+    private String url_valida_toekn;
 
-    private final int timeout;
+    @Value("${adapter.restconsumer.clients.auth.obtener-usuario}")
+    private String url_obtener_usuario;
 
-    public RestConsumerConfig(@Value("${adapter.restconsumer.url}") String url,
-                              @Value("${adapter.restconsumer.timeout}") int timeout) {
-        this.url = url;
-        this.timeout = timeout;
-    }
+    @Value("${adapter.restconsumer.timeout}")
+    private int timeout;
 
-    @Bean
-    public WebClient getWebClient(WebClient.Builder builder) {
+
+    @Bean("validatoken")
+    public WebClient getWebClientAuth(WebClient.Builder builder) {
         return builder
-            .baseUrl(url)
+            .baseUrl(url_valida_toekn)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
             .clientConnector(getClientHttpConnector())
             .build();
+    }
+
+    @Bean("datosUsuario")
+    public WebClient getWebClientusuario(WebClient.Builder builder) {
+        return builder
+                .baseUrl(url_obtener_usuario)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
+                .clientConnector(getClientHttpConnector())
+                .build();
     }
 
     private ClientHttpConnector getClientHttpConnector() {

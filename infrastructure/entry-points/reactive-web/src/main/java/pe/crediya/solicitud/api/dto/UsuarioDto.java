@@ -6,19 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Datos de validacion de toekn")
-public class TokenValidationResponse {
-    private boolean valido;
-    private int codigoHttp;
-    private String mensaje;
-    private Map<String, Object> claims;
-    private LocalDateTime fechaExpiracion;
-
+public class UsuarioDto {
+    String documento;
+    String nombres;
+    String apellidos;
+    String salarioBase;
 }

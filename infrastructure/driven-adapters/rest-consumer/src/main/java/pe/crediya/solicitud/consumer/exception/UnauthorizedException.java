@@ -1,0 +1,7 @@
+package pe.crediya.solicitud.consumer.exception;
+
+public class UnauthorizedException extends RuntimeException {
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}
